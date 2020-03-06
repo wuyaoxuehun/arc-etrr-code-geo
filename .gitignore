@@ -1,0 +1,8 @@
+checkpoint/*
+data/concept*
+data/embeddings
+data/duqu/
+reader/__pycache__/
+retriever/selector/__pycache__/
+retriever/arc-solver/*
+reader/checkpoint

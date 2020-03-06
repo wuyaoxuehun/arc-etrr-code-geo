@@ -17,6 +17,7 @@ from sklearn.metrics import f1_score, precision_recall_fscore_support
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
+
 class Model:
 
     def __init__(self, args):
@@ -30,7 +31,7 @@ class Model:
             torch.cuda.set_device(int(args.gpu))
         # self.network = TriAN(args)
         # self.network = simpleModel(args)
-        self.network= simpleModel(args)
+        self.network = simpleModel(args)
 
         self.init_optimizer()
 
@@ -156,7 +157,7 @@ class Model:
         acc = 100 * correct / total
         precision, recall, f1, _ = precision_recall_fscore_support(gold_flat, prediction_flat)
 
-        #返回的是所有标签（False, True）的指标，取第二个标签的指标，上面可以指定labels=[False, True]来制定输出的顺序
+        # 返回的是所有标签（False, True）的指标，取第二个标签的指标，上面可以指定labels=[False, True]来制定输出的顺序
         return acc, precision[1], recall[1], f1[1]
 
     def predict(self, test_data):
@@ -249,13 +250,11 @@ class Model:
                         vec_counts[w] = vec_counts[w] + 1
                         embedding[vocab[w]].add_(vec)
 
-
-        
         for w, c in vec_counts.items():
             embedding[vocab[w]].div_(c)
 
         print('Loaded %d embeddings (%.2f%%)' %
-                    (len(vec_counts), 100 * len(vec_counts) / len(words)))
+              (len(vec_counts), 100 * len(vec_counts) / len(words)))
 
     def init_optimizer(self):
         parameters = [p for p in self.network.parameters() if p.requires_grad]
@@ -270,7 +269,8 @@ class Model:
         else:
             raise RuntimeError('Unsupported optimizer: %s' %
                                self.args.optimizer)
-        self.scheduler = lr_scheduler.MultiStepLR(self.optimizer, milestones=[10, 15], gamma=0.5)
+        self.scheduler = lr_scheduler.MultiStepLR(self.optimizer, milestones=
+                [int(self.args.epoch*0.35), int(self.args.epoch*0.70), int(self.args.epoch*0.90)], gamma=0.2)
 
     def save(self, ckt_path):
         state_dict = copy.copy(self.network.state_dict())

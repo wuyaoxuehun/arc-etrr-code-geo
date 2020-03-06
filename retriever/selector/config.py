@@ -10,11 +10,11 @@ def str2bool(v):
 parser = argparse.ArgumentParser()
 parser.register('type', 'bool', str2bool)
 parser.add_argument('--gpu', type=str, default='0', help='GPU to use')
-parser.add_argument('--epoch', type=int, default=50, help='Number of epoches to run')
+parser.add_argument('--epoch', type=int, default=200, help='Number of epoches to run')
 parser.add_argument('--optimizer', type=str, default='adamax', help='optimizer, adamax or sgd')
 parser.add_argument('--use_cuda', type='bool', default=True, help='use cuda or not')
 parser.add_argument('--grad_clipping', type=float, default=10.0, help='maximum L2 norm for gradient clipping')
-parser.add_argument('--lr', type=float, default=2e-3, help='learning rate') # 2e-3
+parser.add_argument('--lr', type=float, default=5e-3, help='learning rate') # 2e-3
 parser.add_argument('--weight_decay', type=float, default=0, help='weight decay') 
 parser.add_argument('--pos_weight', type=float, default=2.5, help='positive weight for imbalanced dataset') 
 parser.add_argument('--batch_size', type=int, default=256, help='batch size')

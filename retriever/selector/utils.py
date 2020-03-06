@@ -13,6 +13,7 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 punc = frozenset(string.punctuation)
 stop_word_set = set()
 
+
 def get_stop_words():
     stop_words_dir = './data/vocabulary/stopwords'
     ls = os.listdir(stop_words_dir)
@@ -23,17 +24,18 @@ def get_stop_words():
             for line in file.readlines():
                 stop_word_set.add(line.strip())
 
+
 get_stop_words()
 
-def is_stopword(w):
-    return w.lower() in stop_word_set
 
+def is_stopword(w):
+    return w in stop_word_set or w in punc
 
 
 data_path = './data/vocabulary'
 # science term
 science_terms = set()
-with open(os.path.join(data_path, 'v1_geo_specific.txt'), 'r',encoding='utf8') as f:
+with open(os.path.join(data_path, 'v1_geo_specific.txt'), 'r', encoding='utf8') as f:
     for l in f.readlines():
         l = l.strip().split()
         if len(l) == 1:
